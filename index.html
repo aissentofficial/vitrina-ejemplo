@@ -1,0 +1,39 @@
+<!doctype html>
+<!-- Módulo de ejemplo de Vitrina para probar «Instalar desde GitHub» (spec 016).
+     Para probar «Buscar actualización»: en GitHub cambia VERSION_DE_LA_PAGINA (abajo) y guarda. -->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hola desde GitHub</title>
+<style>
+  body { font: 16px/1.5 -apple-system, system-ui, sans-serif; max-width: 520px; margin: 0 auto; padding: 24px 16px; }
+  input, button { font: inherit; padding: 10px; width: 100%; margin-top: 8px; box-sizing: border-box; }
+  .version { color: #6b6a65; font-size: 14px; }
+  @media (prefers-color-scheme: dark) { body { background: #121211; color: #f1efe9; } .version { color: #a8a69e; } }
+</style>
+</head>
+<body>
+  <p><a href="/">← Todos los módulos</a></p>
+  <h1>Hola desde GitHub</h1>
+  <p>Este módulo se instaló directo desde GitHub, sin copiar archivos a mano.</p>
+  <p class="version">Versión de la página: <strong id="version">1</strong></p>
+  <input id="nombre" placeholder="Tu nombre">
+  <button id="boton">Saludar</button>
+  <p id="salida"></p>
+<script>
+  const VERSION_DE_LA_PAGINA = "1";   // ← cámbialo en GitHub para probar «Buscar actualización»
+  document.getElementById("version").textContent = VERSION_DE_LA_PAGINA;
+  const API = "/api/" + location.pathname.split("/")[2];
+  document.getElementById("boton").onclick = async () => {
+    const r = await fetch(`${API}/saludar`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ nombre: document.getElementById("nombre").value }),
+    });
+    const json = await r.json();
+    document.getElementById("salida").textContent = json.ok ? json.resultado.mensaje : "Error: " + json.error;
+  };
+</script>
+</body>
+</html>

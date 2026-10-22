@@ -1,0 +1,7 @@
+{
+  "nombre": "Hola desde GitHub",
+  "descripcion": "Módulo de ejemplo para probar «Instalar desde GitHub».",
+  "version": "1.0.0",
+  "visible": true,
+  "tipo": "python"
+}
